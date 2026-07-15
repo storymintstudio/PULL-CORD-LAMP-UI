@@ -1,0 +1,215 @@
+:root {
+  --bg: #0a0a0d;
+  --panel: rgba(255, 255, 255, 0.045);
+  --panel-border: rgba(255, 255, 255, 0.09);
+  --lime: #c8ff00;
+  --lime-dim: rgba(200, 255, 0, 0.22);
+  --text: #f2f2f0;
+  --text-dim: #8b8b93;
+  --shade-off: rgba(255, 255, 255, 0.10);
+  --wire: rgba(255, 255, 255, 0.25);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ambient wash behind the card, intensifies when lamp is on */
+.stage {
+  position: relative;
+  padding: 40px;
+}
+
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 50% 30%, var(--lime-dim), transparent 60%);
+  opacity: 0;
+  transition: opacity 600ms ease;
+  pointer-events: none;
+}
+
+.stage.is-on::before {
+  opacity: 0.35;
+}
+
+.card {
+  position: relative;
+  width: min(360px, 90vw);
+  padding: 48px 32px 36px;
+  border-radius: 24px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.title {
+  margin: 0 0 36px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+}
+
+.lamp-rig {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wire {
+  width: 2px;
+  height: 34px;
+  background: var(--wire);
+}
+
+.shade-wrap {
+  position: relative;
+  width: 120px;
+  height: 76px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.glow {
+  position: absolute;
+  top: -60px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--lime-dim) 0%, transparent 68%);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 500ms ease, transform 500ms ease;
+  pointer-events: none;
+}
+
+.stage.is-on .glow {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.shade {
+  position: relative;
+  width: 116px;
+  height: 68px;
+  border-radius: 10px 10px 58px 58px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--panel-border);
+  box-shadow: inset 0 -10px 18px rgba(0, 0, 0, 0.35);
+  transition: background 500ms ease, border-color 500ms ease, box-shadow 500ms ease;
+}
+
+.stage.is-on .shade {
+  background: linear-gradient(180deg, rgba(200, 255, 0, 0.35), rgba(200, 255, 0, 0.06));
+  border-color: rgba(200, 255, 0, 0.5);
+  box-shadow: inset 0 -10px 18px rgba(0, 0, 0, 0.25), 0 0 30px rgba(200, 255, 0, 0.25);
+}
+
+.chain-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.chain-line {
+  width: 2px;
+  height: 54px;
+  background-image: repeating-linear-gradient(to bottom, var(--wire) 0 3px, transparent 3px 7px);
+  transition: background-image 400ms ease;
+}
+
+.stage.is-on .chain-line {
+  background-image: repeating-linear-gradient(to bottom, var(--lime) 0 3px, transparent 3px 7px);
+}
+
+.bead {
+  width: 18px;
+  height: 18px;
+  margin-top: -2px;
+  border-radius: 50%;
+  border: 1px solid var(--panel-border);
+  background: #d8d8d6;
+  cursor: grab;
+  touch-action: none;
+  padding: 0;
+  transition: background 400ms ease, box-shadow 400ms ease;
+}
+
+.bead:active {
+  cursor: grabbing;
+}
+
+.bead:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.stage.is-on .bead {
+  background: var(--lime);
+  box-shadow: 0 0 14px rgba(200, 255, 0, 0.7);
+}
+
+.hint {
+  margin: 28px 0 0;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  transition: opacity 400ms ease;
+}
+
+.status {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: baseline;
+  margin: 14px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.status-label {
+  color: var(--text-dim);
+}
+
+.status-value {
+  color: var(--text);
+  font-weight: 700;
+  transition: color 400ms ease;
+}
+
+.stage.is-on .status-value {
+  color: var(--lime);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow, .shade, .chain-line, .bead, .status-value, .hint, .stage::before {
+    transition-duration: 1ms;
+  }
+}

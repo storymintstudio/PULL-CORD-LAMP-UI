@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pull-Cord Lamp Toggle — Storymint Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="stage" id="stage">
+    <div class="card">
+      <p class="eyebrow">STORYMINT</p>
+      <h1 class="title">Pull to switch</h1>
+
+      <div class="lamp-rig">
+        <span class="wire" aria-hidden="true"></span>
+
+        <div class="shade-wrap">
+          <div class="glow" aria-hidden="true"></div>
+          <div class="shade" aria-hidden="true"></div>
+        </div>
+
+        <div class="chain-wrap">
+          <span class="chain-line" id="chainLine" aria-hidden="true"></span>
+          <button class="bead" id="bead" type="button" aria-pressed="false" aria-label="Pull the cord to toggle the lamp"></button>
+        </div>
+      </div>
+
+      <p class="hint" id="hint">drag the bead down — or just tap it</p>
+
+      <p class="status">
+        <span class="status-label">state</span>
+        <span class="status-value" id="stateValue">off</span>
+      </p>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
